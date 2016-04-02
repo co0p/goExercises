@@ -15,17 +15,20 @@ var testCases = []struct {
 	{2000, true, "Y2K"},
 }
 
-// Define a function IsLeapYear(int) bool.
-//
-// Also define a testVersion with a value that matches
-// the targetTestVersion here.
-
 func TestLeapYears(t *testing.T) {
 	for _, test := range testCases {
 		observed := IsLeapYear(test.year)
 		if observed != test.expected {
 			t.Fatalf("IsLeapYear(%d) = %t, want %t (%s)",
 				test.year, observed, test.expected, test.description)
+		}
+	}
+}
+
+func BenchmarkLeapYears(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		for _, test := range testCases {
+			IsLeapYear(test.year)
 		}
 	}
 }
